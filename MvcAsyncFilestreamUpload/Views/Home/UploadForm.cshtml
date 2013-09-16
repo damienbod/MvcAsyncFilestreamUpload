@@ -1,0 +1,32 @@
+﻿@model MvcAsyncFilestreamUpload.Models.UploadModel
+
+    <fieldset class="form">
+    <legend>My Docs</legend>	
+        <table width="100%">
+	        <tr>
+		        <th>Doc Name</th>
+		        <th>Upload Datum</th>
+		        <th>Delete</th>
+	        </tr>                
+            @foreach (var doc in Model.Documents)
+            { 
+            <tr>
+                <td title="@doc.DocumentName"><a href="/Home/GetFileAsync/@doc.Id">@doc.DocumentName</a></td>		
+                <td>@doc.UploadDate.ToShortDateString()</td>
+
+	            <td>
+                    @if (doc.IsChecked)
+                    {
+                        <input type="checkbox" id="DocumentIds" name="DocumentIds" value="@doc.Id" checked="checked" />	
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="DocumentIds" name="DocumentIds" value="@doc.Id" />			
+		            }		
+	            </td>
+            </tr>
+            }
+        </table>
+
+    </fieldset>
+

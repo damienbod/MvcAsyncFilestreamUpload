@@ -1,0 +1,55 @@
+﻿@model MvcAsyncFilestreamUpload.Models.UploadModel
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>title</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Styles.Render("~/Content/themes/base/css")
+    </head>
+    <body>
+        <div>
+            A filestream demo
+        </div>
+        <div id="doclist">
+            @Html.Action("UploadForm") 
+        </div>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#ajaxUploadForm").ajaxForm({
+                    target: "#ajaxUploadForm",
+                    iframe: true,
+                    dataType: "json",
+                    beforeSubmit: function () {
+                    },
+                    success: function (result) {
+                        loadUrlContent('@(Url.Action("UploadForm"))', 'doclist');
+		            $("#fileInput").replaceWith("<input type=\"file\" id=\"fileInput\" name=\"file\" style=\"width:317px\" />");
+		        },
+		        error: function (xhr, textStatus, errorThrown) {
+		        }
+		    });
+		});
+	</script>            
+	
+	<form id="ajaxUploadForm" action="@Url.Action("AjaxUpload", "Home")" method="post" enctype="multipart/form-data">
+
+		<fieldset class="form">
+			<legend>Async Upload Form</legend>
+			<ol class="last">
+				<li>
+					<label>upload </label>
+					<input type="file" id="fileInput" name="file" style="width:317px" />
+				</li>
+				<li>
+					<input class="btn" id="ajaxUploadButton" type="submit" value="Upload" />
+				</li>
+			</ol>
+		</fieldset>
+	</form> 
+    </body>
+</html>
